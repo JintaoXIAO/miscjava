@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class QuickSort {
   public void sort(int[] array) {
     if (array == null||array.length <= 1) return;
-    h(array, 0, array.length - 1);
+    qs(array, 0, array.length - 1);
   }
 
   /**
@@ -13,8 +13,14 @@ public class QuickSort {
    * @param s     ... first index
    * @param e     ... last index
    */
-  private void h(int[] array, int s, int e) {
+  private void qs(int[] array, int s, int e) {
     if (s >= e) return;
+    int p = partition(array, s, e);
+    qs(array,s, p-1);
+    qs(array, p + 1, e);
+  }
+
+  private int partition(int[] array, int s, int e) {
     int pivot = array[s];
     int i = s, j = e;
     while (i <= j) {
@@ -27,8 +33,7 @@ public class QuickSort {
       }
     }
     swap(array, s, i-1);
-    h(array,s, i-2);
-    h(array, i, e);
+    return i - 1;
   }
 
   private void swap(int[] array, int i, int j) {
