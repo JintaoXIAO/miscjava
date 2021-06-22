@@ -1,4 +1,4 @@
-package algos;
+package algos.search;
 
 public class JumpSearch {
   /**

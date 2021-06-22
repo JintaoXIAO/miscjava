@@ -1,4 +1,4 @@
-package algos;
+package algos.search;
 
 public class InterpolationSearch {
   public int search(int k, int[] sorted){
