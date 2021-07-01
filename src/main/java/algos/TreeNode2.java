@@ -1,8 +1,8 @@
-package algos.tree;
+package algos;
 
 public class TreeNode2 implements Cloneable{
-  int val;
-  TreeNode2 left, right;
+  public int val;
+  public TreeNode2 left, right;
 
   public TreeNode2(int val, TreeNode2 left, TreeNode2 right) {
     this.val = val;
@@ -10,15 +10,14 @@ public class TreeNode2 implements Cloneable{
     this.right = right;
   }
 
-  @Override
-  protected Object clone() {
-    return this.clone1();
-  }
-
   private TreeNode2 clone1(){
     return n(val,
             left == null ? null : left.clone1(),
             right == null ? null : right.clone1());
+  }
+
+  public static TreeNode2 clone(TreeNode2 src) {
+    return src.clone1();
   }
 
   public static void print(TreeNode2 root) {
@@ -51,7 +50,7 @@ public class TreeNode2 implements Cloneable{
                             n(6),
                             n(7))),
             n(3));
-    var t2 = t1.clone();
+    var t2 = clone(t1);
     //System.out.printf("%0s\n", "<<<<");
     print(t1);
   }

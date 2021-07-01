@@ -1,9 +1,12 @@
 package algos.tree;
 
+import algos.TreeNode2;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import static algos.tree.TreeNode2.n;
+import static algos.TreeNode2.n;
 
 public class AllPossibleBinaryTreesWithInorderTraversal {
   public List<TreeNode2> solve(int[] inorder) {
@@ -26,8 +29,8 @@ public class AllPossibleBinaryTreesWithInorderTraversal {
       return List.of(n(val));
     }
 
-    var ta = insertAsLeftSubTree((TreeNode2) root.clone(), val);
-    var tb = insertAsRightMostLeaf((TreeNode2) root.clone(), val);
+    var ta = insertAsLeftSubTree(TreeNode2.clone(root), val);
+    var tb = insertAsRightMostLeaf(TreeNode2.clone(root), val);
     return List.of(ta, tb);
   }
 
