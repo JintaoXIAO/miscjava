@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Lt41 {
 
   public static void main(String[] args) {
-    Solution s = new Lt41().new Solution();
+    var s = new Lt41().new Solution2();
     int[][] quizs = new int[][]{
             {1,2,0},
             {1},
@@ -16,6 +16,53 @@ public class Lt41 {
             .forEach(System.out::println);
   }
 
+  // swap
+  class Solution2 {
+    public int firstMissingPositive(int[] nums) {
+      int n = nums.length;
+      for (int i = 0; i < n; i++) {
+        while (nums[i] > 0 && nums[i] < n + 1 && nums[nums[i] - 1] != nums[i]) {
+          int t = nums[nums[i] - 1];
+          nums[nums[i] - 1] = nums[i];
+          nums[i] = t;
+        }
+      }
+      for (int i = 0; i < n; i++) {
+        if (nums[i] != i + 1) {
+          return i + 1;
+        }
+      }
+      return n + 1;
+    }
+  }
+
+
+  // mark
+  class Solution1 {
+    public int firstMissingPositive(int[] nums) {
+      // 1. tidying
+      int n = nums.length;
+      for (int i = 0; i < n; i++) {
+        if (nums[i] < 1 || nums[i] > n) {
+          nums[i] = n + 1;
+        }
+      }
+
+      // 2. mark
+      for (int i = 0; i < n; i++) {
+        if (nums[i] < n + 1 && nums[nums[i] - 1] > 0) {
+          nums[nums[i] - 1] = -nums[nums[i] - 1];
+        }
+      }
+      // 3. search
+      for (int i = 0; i < n; i++) {
+        if (nums[i] > 0) {
+          return i + 1;
+        }
+      }
+      return n + 1;
+    }
+  }
 
   class Solution {
     public int firstMissingPositive(int[] nums) {
