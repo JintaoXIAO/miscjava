@@ -10,8 +10,15 @@ public class QuickUnionPCUF extends AbstractArrayBasedUF implements UF{
 
   @Override
   public int find(int p) {
-    while(p != id[p]) p = id[p];
-    return p;
+    int pRoot = p;
+    while (pRoot != id[pRoot]) pRoot = id[pRoot];
+    int tp;
+    while (p != pRoot) {
+      tp = id[p];
+      id[p] = pRoot;
+      p = tp;
+    }
+    return pRoot;
   }
 
   @Override
