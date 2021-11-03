@@ -1,6 +1,8 @@
 package algos.basic;
 
-public abstract class AbstractArrayBasedUF implements UF{
+import java.util.Arrays;
+
+public abstract class AbstractArrayBasedUF implements UF, Stat{
   protected int[] id;
   protected int count;
 
@@ -24,5 +26,8 @@ public abstract class AbstractArrayBasedUF implements UF{
 
   public abstract void union(int p, int q);
 
-
+  @Override
+  public void status() {
+    System.out.println("status: " + Arrays.toString(id));
+  }
 }

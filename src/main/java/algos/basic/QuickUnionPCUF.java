@@ -1,9 +1,10 @@
 package algos.basic;
+
 /*
 1.5.12
 quick union with path compress
  */
-public class QuickUnionPCUF extends AbstractArrayBasedUF implements UF{
+public class QuickUnionPCUF extends AbstractArrayBasedUF implements UF {
   public QuickUnionPCUF(int N) {
     super(N);
   }
@@ -12,9 +13,9 @@ public class QuickUnionPCUF extends AbstractArrayBasedUF implements UF{
   public int find(int p) {
     int pRoot = p;
     while (pRoot != id[pRoot]) pRoot = id[pRoot];
-    int tp;
+
     while (p != pRoot) {
-      tp = id[p];
+      int tp = id[p];
       id[p] = pRoot;
       p = tp;
     }
@@ -28,6 +29,6 @@ public class QuickUnionPCUF extends AbstractArrayBasedUF implements UF{
     if (pRoot == qRoot) return;
 
     id[pRoot] = qRoot;
-    count --;
+    count--;
   }
 }
