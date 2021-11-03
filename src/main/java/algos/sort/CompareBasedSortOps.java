@@ -16,4 +16,6 @@ public interface CompareBasedSortOps {
       if (less(ts[i], ts[i-1])) return false;
     return true;
   }
+
+  <T extends Comparable<T>> void sort(T[] ts);
 }

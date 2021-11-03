@@ -1,6 +1,8 @@
 package algos.sort;
 
 public class Selection implements CompareBasedSortOps{
+
+  @Override
   public <T extends Comparable<T>> void sort(T[] ts) {
     int N = ts.length;
     for (int i = 0; i < N; i++) {
