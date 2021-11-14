@@ -1,6 +1,6 @@
 package algos;
 
-public class TreeNode2 implements Cloneable{
+public class TreeNode2 {
   public int val;
   public TreeNode2 left, right;
 

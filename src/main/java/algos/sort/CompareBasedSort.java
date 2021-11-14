@@ -1,6 +1,6 @@
 package algos.sort;
 
-public interface CompareBasedSortOps {
+public interface CompareBasedSort {
   default <T extends Comparable<T>> void exch(T[] ts, int i, int j) {
     T t = ts[i];
     ts[i] = ts[j];
@@ -16,4 +16,6 @@ public interface CompareBasedSortOps {
       if (less(ts[i], ts[i-1])) return false;
     return true;
   }
+
+  <T extends Comparable<T>> void sort(T[] ts);
 }
