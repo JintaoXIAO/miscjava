@@ -5,7 +5,9 @@ import algos.TreeNode2;
 import static algos.TreeNode2.n;
 import static algos.TreeNode2.print;
 
-// modify a binary tree to get preorder traversal using right pointers only
+/**
+ * @see "https://www.geeksforgeeks.org/modify-binary-tree-get-preorder-traversal-using-right-pointers/"
+ */
 public class BinaryTree03 {
 
   public static void main(String[] args) {

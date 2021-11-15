@@ -1,6 +1,6 @@
 package algos.sort;
 
-public class Shell implements CompareBasedSortOps{
+public class Shell implements CompareBasedSort{
 
   @Override
   public <T extends Comparable<T>> void sort(T[] ts) {

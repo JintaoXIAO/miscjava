@@ -8,7 +8,9 @@ import java.util.Queue;
 import static algos.TreeNode2.n;
 import static algos.TreeNode2.print;
 
-// deletion in a binary tree
+/**
+ * @see "https://www.geeksforgeeks.org/deletion-binary-tree/"
+ */
 public class BinaryTree02 {
   public static void main(String[] args) {
     var d = n(12, n(4), n(19));

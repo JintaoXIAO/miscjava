@@ -5,7 +5,9 @@ import algos.TreeNode2;
 import java.util.LinkedList;
 import java.util.Queue;
 
-// insertion in a binary tree in level order
+/**
+ * @see "https://www.geeksforgeeks.org/insertion-binary-tree/"
+ */
 public class BinaryTree01 {
   public static void solve(TreeNode2 root, int val) {
     assert root != null;
