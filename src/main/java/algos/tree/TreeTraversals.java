@@ -10,7 +10,116 @@ import static algos.TreeNode2.print;
 
 public class TreeTraversals {
   public static void main(String[] args) {
+    new InOrderTreeTraversalWithoutRecursionAndWithoutStack().run();
+  }
+  static class InOrderTreeTraversalWithoutRecursionAndWithoutStack implements Runnable {
 
+    @Override
+    public void run() {
+      var tree =
+              n(3,
+                      n(5, n(1), null),
+                      n(6, n(4), n(7)));
+      solve(tree);
+    }
+
+    void solve(TreeNode2 root) {
+      if (root == null) return;
+
+      Set<TreeNode2> visited = new HashSet<>();
+
+      while (!visited.contains(root)) {
+
+        TreeNode2 n = root, p = root;
+        while (n != null && !visited.contains(n)) {
+          while (n.left != null && !visited.contains(n.left)) {
+            p = n;
+            n = n.left;
+          }
+          visited.add(n);
+          System.out.println(n.val);
+          if (!visited.contains(p)) {
+            visited.add(p);
+            System.out.println(p.val);
+          }
+          n = p.right;
+        }
+      }
+    }
+
+  }
+
+
+  static class PostOrderTreeTraversalWithoutRecursionAndWithoutStack implements Runnable {
+
+    @Override
+    public void run() {
+      var tree =
+              n(3,
+                      n(5, n(1), null),
+                      n(6, n(4), n(7)));
+      solve(tree);
+    }
+
+    void solve(TreeNode2 root) {
+      if (root == null) return;
+
+      Set<TreeNode2> visited = new HashSet<>();
+
+      while (!visited.contains(root)) {
+
+        TreeNode2 n = root, p = null;
+        while (n != null && !visited.contains(n)) {
+          while (n != null && !visited.contains(n)) {
+            p = n;
+            n = n.left;
+          }
+          n = p.right;
+        }
+        System.out.println(p.val);
+        visited.add(p);
+      }
+    }
+
+  }
+
+  static class IterativeDiagonalTraversalBinaryTree implements Runnable {
+    void diagonalTraversal(TreeNode2 root) {
+      helper(root);
+    }
+
+    void helper(TreeNode2 root) {
+      if (root == null) return;
+
+      Queue<TreeNode2> queue = new LinkedList<>();
+      TreeNode2 p = root;
+      while (p != null) {
+        queue.offer(p);
+        p = p.right;
+      }
+
+      while (!queue.isEmpty()) {
+        TreeNode2 node = queue.poll();
+        System.out.println(node.val);
+        if (node.left != null) {
+          queue.offer(node.left);
+          if (node.left.right != null)
+            queue.offer(node.left.right);
+        }
+      }
+    }
+
+    @Override
+    public void run() {
+      var tree =
+              n(8,
+                      n(3, n(1), null),
+                      n(10,
+                              n(6, n(4), n(7)),
+                              n(14, n(13), null)));
+
+      diagonalTraversal(tree);
+    }
   }
 
   static class NumberOfBinaryTreesForGivenPreorderSequenceLength implements Runnable {
@@ -143,18 +252,18 @@ public class TreeTraversals {
     @Override
     public void run() {
       TreeNode2 tree =
-          n(20,
-              n(8,
-                  n(4),
-                  n(12, n(10), n(14))),
-              n(22, null, n(25)));
+              n(20,
+                      n(8,
+                              n(4),
+                              n(12, n(10), n(14))),
+                      n(22, null, n(25)));
 
       boundaryTraversal(tree);
 
     }
   }
 
-  static class DensityOfBinaryTreeInOneTraversal implements Runnable{
+  static class DensityOfBinaryTreeInOneTraversal implements Runnable {
 
     public static float density(TreeNode2 root) {
       int[] size = new int[]{0};
@@ -206,7 +315,7 @@ public class TreeTraversals {
     }
   }
 
-  static class ModifyBinaryTreeGetPreorderTraversalUsingRightPointers implements Runnable{
+  static class ModifyBinaryTreeGetPreorderTraversalUsingRightPointers implements Runnable {
 
     void solve(TreeNode2 root) {
       preOrderProcess(root);
@@ -235,22 +344,22 @@ public class TreeTraversals {
     @Override
     public void run() {
       TreeNode2 root =
-          n(10,
-              n(8, n(3), n(5)),
-              n(2));
+              n(10,
+                      n(8, n(3), n(5)),
+                      n(2));
       solve(root);
       print(root);
 
     }
   }
 
-  static class DeletionBinaryTree implements Runnable{
+  static class DeletionBinaryTree implements Runnable {
     @Override
     public void run() {
       var d = n(12, n(4), n(19));
       var tree = n(13,
-          d,
-          n(10, n(16), n(9)));
+              d,
+              n(10, n(16), n(9)));
 
       print(tree);
       solve(tree, d);
@@ -288,8 +397,8 @@ public class TreeTraversals {
         if (pNode.left == node) pNode.left = n;
         else pNode.right = n;
 
-        if(p.left == n) p.left = null;
-        if(p.right == n) p.right = null;
+        if (p.left == n) p.left = null;
+        if (p.right == n) p.right = null;
 
         n.left = node.left;
         n.right = node.right;
@@ -338,7 +447,7 @@ public class TreeTraversals {
     }
   }
 
-  static class AllPossibleBinaryTreesWithInorderTraversal implements Runnable{
+  static class AllPossibleBinaryTreesWithInorderTraversal implements Runnable {
     public List<TreeNode2> solve(int[] inorder) {
       List<TreeNode2> rst = new ArrayList<>();
       for (int j : inorder) {
@@ -351,7 +460,7 @@ public class TreeTraversals {
     public void run() {
       var s = new AllPossibleBinaryTreesWithInorderTraversal();
       s.solve(new int[]{1, 2, 3})
-          .forEach(TreeNode2::print);
+              .forEach(TreeNode2::print);
     }
 
 
@@ -376,6 +485,7 @@ public class TreeTraversals {
       }
       return rst;
     }
+
     private TreeNode2 insertAsRightMostLeaf(TreeNode2 root, int val) {
       assert root != null;
       var p = root;
