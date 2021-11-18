@@ -12,6 +12,21 @@ public class TreeTraversals {
   public static void main(String[] args) {
     new InOrderTreeTraversalWithoutRecursionAndWithoutStack().run();
   }
+
+  static class FindPostOrderTraversalOfBSTFromPreOrderTraversal implements Runnable {
+
+    @Override
+    public void run() {
+      solve(new int[]{40, 30, 35, 80, 100});
+    }
+
+    /*for bst*/
+    void solve(int[] preorder) {
+
+    }
+
+  }
+
   static class InOrderTreeTraversalWithoutRecursionAndWithoutStack implements Runnable {
 
     @Override
@@ -48,7 +63,6 @@ public class TreeTraversals {
     }
 
   }
-
 
   static class PostOrderTreeTraversalWithoutRecursionAndWithoutStack implements Runnable {
 
