@@ -5,14 +5,13 @@ import java.util.Arrays;
 public class Quick implements CompareBasedSort{
 
   public static void main(String[] args) {
-    var quiz = new Character[]{'K','R','A','T','E','L','E','P','U','I','M','Q','C','X','O','S'};
+
+    var s ="QUICKSORTEXAMPLE";
+    Character[] quiz = s.chars().mapToObj(i -> (char) i).toArray(Character[]::new);
     var q = new Quick();
     q.sort(quiz);
-
     System.out.println(Arrays.toString(quiz));
   }
-
-
 
   @Override
   public <T extends Comparable<T>> void sort(T[] ts) {
@@ -23,21 +22,28 @@ public class Quick implements CompareBasedSort{
     if (lo >= hi) return;
 
     int p = partition(ts, lo, hi);
-    sort(ts, lo, p -1);
+    sort(ts, lo, p - 1);
     sort(ts, p + 1, hi);
   }
 
   <T extends Comparable<T>> int partition(T[] ts, int lo, int hi) {
     T pivot = ts[lo];
 
-    int l = 1, r = hi;
+    int p = lo;
+    int l = lo + 1, r = hi;
     while (l < r) {
       while (l < r && less(ts[l], pivot)) l++;
       while (l < r && less(pivot, ts[r])) r--;
       if (l < r) exch(ts, l, r);
-      else exch(ts, lo, l);
+      else if (less(ts[l], pivot)) {
+        exch(ts, lo, l);
+        p = l;
+      } else {
+        exch(ts, lo, l - 1);
+        p = l - 1;
+      }
     }
-    return l;
+    return p;
   }
 
 }
