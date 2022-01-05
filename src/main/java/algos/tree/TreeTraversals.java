@@ -4,13 +4,86 @@ package algos.tree;
 import algos.TreeNode2;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static algos.TreeNode2.n;
 import static algos.TreeNode2.print;
 
 public class TreeTraversals {
   public static void main(String[] args) {
-    new InOrderTreeTraversalWithoutRecursionAndWithoutStack().run();
+    new FindAllPossibleBinaryTreesWithGivenInorderTraversal().run();
+  }
+
+  /*https://www.geeksforgeeks.org/find-all-possible-trees-with-given-inorder-traversal/*/
+  static class FindAllPossibleBinaryTreesWithGivenInorderTraversal implements Runnable {
+    void traverse(TreeNode2 root) {
+      if (root == null) return;
+      traverse(root.left);
+      //inorderProcess(root)
+      traverse(root.right);
+    }
+
+    /*
+    get all the possible preorder sequence by the inorder sequence
+    inorder: [4,5,7]
+    possible preorders:
+      4,5,7
+      4,7,5
+      5,4,7
+      7,4,5
+      7,5,4
+     */
+    List<List<Integer>> process(int[] arr, int l, int r) {
+      List<List<Integer>> result = new LinkedList<>();
+
+      // iterate all possible root values
+      for (int i = l; i <= r; i++) {
+        int n = arr[i];
+        // process node n
+        List<List<Integer>> lt = process(arr, l, i - 1);
+        List<List<Integer>> rt = process(arr, i + 1, r);
+
+        if (lt.isEmpty() && rt.isEmpty()) {
+          result.add(List.of(n));
+        } else if (lt.isEmpty()) {
+          List<List<Integer>> rrst = rt.stream().map(rr -> {
+            List<Integer> lst = new LinkedList<>();
+            lst.add(n);
+            lst.addAll(rr);
+            return lst;
+          }).collect(Collectors.toList());
+          result.addAll(rrst);
+        } else if (rt.isEmpty()){
+          List<List<Integer>> lrst = lt.stream().map(ll -> {
+            List<Integer> lst = new LinkedList<>();
+            lst.add(n);
+            lst.addAll(ll);
+            return lst;
+          }).collect(Collectors.toList());
+          result.addAll(lrst);
+        } else {
+          List<List<Integer>> rrst = rt.stream().flatMap(rr -> lt.stream().map(ll -> {
+            List<Integer> rst = new LinkedList<>();
+            rst.add(n);
+            rst.addAll(ll);
+            rst.addAll(rr);
+            return rst;
+          })).collect(Collectors.toList());
+          result.addAll(rrst);
+        }
+      }
+      return result;
+    }
+
+    void process(int[] arr) {
+      List<List<Integer>> result = process(arr, 0, arr.length - 1);
+      System.out.println(result);
+    }
+
+    @Override
+    public void run() {
+      process(new int[]{4, 5, 7});
+    }
   }
 
   static class FindPostOrderTraversalOfBSTFromPreOrderTraversal implements Runnable {
