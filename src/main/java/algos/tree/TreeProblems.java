@@ -11,7 +11,61 @@ import static algos.TreeNode2.printInOrder;
 
 public class TreeProblems {
   public static void main(String[] args) {
-    new ReplaceEachNodeInBinaryTreeWithTheSumOfItsInorderPredecessorAndSuccessor().run();
+    new PopulateInorderSuccessorForAllNodes().run();
+  }
+
+  static class PopulateInorderSuccessorForAllNodes implements Runnable{
+
+    public void populate(Node root) {
+      Node[] nodeP = new Node[1];
+      inOrderTraverse(root, nodeP);
+    }
+
+    void inOrderTraverse(Node root, Node[] previousNode) {
+      if (root == null) return;
+      if (root.left == null && root.right == null) {
+        if (previousNode[0] != null)
+          previousNode[0].next = root;
+        previousNode[0] = root;
+        return;
+      }
+
+      if (root.left != null)
+        inOrderTraverse(root.left, previousNode);
+      // process current node
+      if (previousNode[0] != null)
+        previousNode[0].next = root;
+      previousNode[0] = root;
+
+      if (root.right != null)
+        inOrderTraverse(root.right, previousNode);
+    }
+
+    @Override
+    public void run() {
+      Node tree = new Node(1);
+      tree.left = new Node(2);
+      tree.left.left = new Node(4);
+      tree.left.right = new Node(5);
+
+      tree.right = new Node(3);
+      tree.right.left = new Node(6);
+      tree.right.right = new Node(7);
+      populate(tree);
+      System.out.println("finished");
+    }
+
+
+    static class Node {
+      int data;
+      /* next point to current node's inorder successor  */
+      Node left, right, next;
+
+      Node(int data) {
+        this.data = data;
+        this.left = this.right = this.next = null;
+      }
+    }
   }
 
   /* https://www.geeksforgeeks.org/replace-node-binary-tree-sum-inorder-predecessor-successor/ */
