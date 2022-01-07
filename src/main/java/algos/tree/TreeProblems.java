@@ -7,11 +7,50 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static algos.TreeNode2.n;
-import static algos.TreeNode2.print;
+import static algos.TreeNode2.printInOrder;
 
-public class TreeTraversals {
+public class TreeProblems {
   public static void main(String[] args) {
-    new FindAllPossibleBinaryTreesWithGivenInorderTraversal().run();
+    new ReplaceEachNodeInBinaryTreeWithTheSumOfItsInorderPredecessorAndSuccessor().run();
+  }
+
+  /* https://www.geeksforgeeks.org/replace-node-binary-tree-sum-inorder-predecessor-successor/ */
+  static class ReplaceEachNodeInBinaryTreeWithTheSumOfItsInorderPredecessorAndSuccessor implements Runnable{
+    public void process(TreeNode2 root) {
+      List<TreeNode2> inOrderNodes = new ArrayList<>();
+      inorderTraverse(root, inOrderNodes);
+
+      List<Integer> newNodeValues = new ArrayList<>(inOrderNodes.size());
+
+      int SIZE = inOrderNodes.size();
+      for (int i = 0; i < SIZE; i++) {
+        int value = (i > 0 ? inOrderNodes.get(i - 1).val : 0)
+                + (i < SIZE - 1 ? inOrderNodes.get(i + 1).val : 0);
+        newNodeValues.add(i, value);
+      }
+
+      for (int i = 0; i < SIZE; i++) {
+        inOrderNodes.get(i).val = newNodeValues.get(i);
+      }
+    }
+
+    private void inorderTraverse(TreeNode2 root, List<TreeNode2> inOrderNodes) {
+      if (root == null) return;
+      inorderTraverse(root.left, inOrderNodes);
+      inOrderNodes.add(root);
+      inorderTraverse(root.right, inOrderNodes);
+    }
+
+    @Override
+    public void run() {
+      var tree = TreeNode2.n(1,
+              n(2, n(4), n(5)),
+              n(3, n(6), n(7)));
+      TreeNode2.printInOrder(tree);
+      process(tree);
+      System.out.println();
+      TreeNode2.printInOrder(tree);
+    }
   }
 
   /*https://www.geeksforgeeks.org/find-all-possible-trees-with-given-inorder-traversal/*/
@@ -435,7 +474,7 @@ public class TreeTraversals {
                       n(8, n(3), n(5)),
                       n(2));
       solve(root);
-      print(root);
+      printInOrder(root);
 
     }
   }
@@ -448,9 +487,9 @@ public class TreeTraversals {
               d,
               n(10, n(16), n(9)));
 
-      print(tree);
+      printInOrder(tree);
       solve(tree, d);
-      print(tree);
+      printInOrder(tree);
     }
 
 
@@ -547,7 +586,7 @@ public class TreeTraversals {
     public void run() {
       var s = new AllPossibleBinaryTreesWithInorderTraversal();
       s.solve(new int[]{1, 2, 3})
-              .forEach(TreeNode2::print);
+              .forEach(TreeNode2::printInOrder);
     }
 
 

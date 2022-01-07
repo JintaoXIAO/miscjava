@@ -20,18 +20,11 @@ public class TreeNode2 {
     return src.clone1();
   }
 
-  public static void print(TreeNode2 root) {
-    print(root, 1);
-  }
-
-  private static void print(TreeNode2 root, int padding) {
-    if (root == null) {
-      System.out.printf("%"+ padding + "s\n", "-");
-      return;
-    }
-    System.out.printf(("%" + padding + "s\n"), root.val);
-    print(root.left, padding + 3);
-    print(root.right, padding + 3);
+  public static void printInOrder(TreeNode2 root) {
+    if (root == null) return;
+    printInOrder(root.left);
+    System.out.print(root.val + " ");
+    printInOrder(root.right);
   }
 
   public static TreeNode2 n(int val, TreeNode2 left, TreeNode2 right){
@@ -52,6 +45,6 @@ public class TreeNode2 {
             n(3));
     var t2 = clone(t1);
     //System.out.printf("%0s\n", "<<<<");
-    print(t1);
+    printInOrder(t1);
   }
 }
